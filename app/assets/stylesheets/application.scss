@@ -1,0 +1,16 @@
+@import "bootstrap";
+
+.navbar-custom {
+  background-color: #2972bb; // 任意の背景色に変更
+  color: #ffffff;
+}
+
+.custom-border {
+  border: 2px solid #000; // ボーダーの色と太さを指定
+  background-color: #f0f0f0; // ボーダー内の背景色を指定
+  padding: 10px; // 内容がボーダーにくっつかないようにパディングを追加
+}
+
+.near-deadline {
+  background-color: #ffdddd; // 背景色を赤っぽく変更
+}
