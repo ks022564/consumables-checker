@@ -1,0 +1,70 @@
+
+
+<!-- app/views/products/new.html.erb -->
+<%= form_with model: @product, local: true, class: "needs-validation" do |form| %>
+  <div class="container mt-5">
+    <div class="row mb-4">
+      <div class="col">
+        <h2 class="text-left">商品登録フォーム</h2>
+      </div>
+    </div>
+    <div class="row mb-4">
+      <div class="col">
+        <p>こちらのフォームから新規商品を登録できます。すべてのフィールドに正確な情報を入力してください。</p>
+      </div>
+    </div>
+    <div class="row mb-3">
+      <div class="col-md-6">
+        <%= form.label :equipment_name, "設備名", class: "form-label" %>
+        <%= form.text_field :equipment_name, placeholder: "例: ベルトコンベア", class: "form-control", required: true %>
+        <div class="invalid-feedback">設備名を入力してください。</div>
+      </div>
+      <div class="col-md-6">
+        <%= form.label :equipment_model_number, "設備型番", class: "form-label" %>
+        <%= form.text_field :equipment_model_number, placeholder: "例: X1000", class: "form-control", required: true %>
+        <div class="invalid-feedback">設備型番を入力してください。</div>
+      </div>
+    </div>
+    <div class="row mb-3">
+      <div class="col-md-6">
+        <%= form.label :serial_number, "シリアルナンバー", class: "form-label" %>
+        <%= form.text_field :serial_number, placeholder: "例: 12345678", class: "form-control", required: true %>
+        <div class="invalid-feedback">シリアルナンバーを入力してください。</div>
+      </div>
+      <div class="col-md-6">
+        <%= form.label :consumable_name, "消耗品名", class: "form-label" %>
+        <%= form.text_field :consumable_name, placeholder: "例: ベルト", class: "form-control", required: true %>
+        <div class="invalid-feedback">消耗品名を入力してください。</div>
+      </div>
+    </div>
+    <div class="row mb-3">
+      <div class="col-md-6">
+        <%= form.label :consumable_model_number, "消耗品型番", class: "form-label" %>
+        <%= form.text_field :consumable_model_number, placeholder: "例: X10001", class: "form-control", required: true %>
+        <div class="invalid-feedback">消耗品型番を入力してください。</div>
+      </div>
+      <div class="col-md-6">
+        <%= form.label :manufacturer, "メーカー", class: "form-label" %>
+        <%= form.text_field :manufacturer, placeholder: "例: 〇〇工業", class: "form-control", required: true %>
+        <div class="invalid-feedback">メーカーを入力してください。</div>
+      </div>
+    </div>
+    <div class="row mb-3">
+      <div class="col-md-6">
+        <%= form.label :inspection_interval, "点検周期 (日)", class: "form-label" %>
+        <%= form.number_field :inspection_interval, placeholder: "例: 90", class: "form-control", required: true %>
+        <div class="invalid-feedback">点検周期を入力してください。</div>
+      </div>
+      <div class="col-md-6">
+        <%= form.label :start_date, "使用開始日", class: "form-label" %>
+        <%= form.date_field :start_date, class: "form-control", required: true %>
+        <div class="invalid-feedback">使用開始日を入力してください。</div>
+      </div>
+    </div>
+    <div class="row mb-3">
+      <div class="col">
+        <%= form.submit "登録", class: "btn btn-primary" %>
+      </div>
+    </div>
+  </div>
+<% end %>

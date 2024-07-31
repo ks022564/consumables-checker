@@ -1,0 +1,28 @@
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-12 col-md-8 col-lg-6">
+      <div class="card shadow-lg">
+        <div class="card-header text-center">
+          <h2>ログイン</h2>
+        </div>
+        <div class="card-body">
+          <%= form_with model: @user, url: user_session_path, local: true do |form| %>
+            <div class="mb-3">
+              <%= form.label :email, 'メールアドレス', class: 'form-label' %>
+              <%= form.email_field :email, class: 'form-control', placeholder: 'メールアドレスを入力してください' %>
+            </div>
+            <div class="mb-3">
+              <%= form.label :password, 'パスワード', class: 'form-label' %>
+              <%= form.password_field :password, class: 'form-control', placeholder: '6文字以上の半角英数字' %>
+            </div>
+            <div class="d-grid mb-3">
+              <%= form.submit 'ログイン', class: 'btn btn-primary btn-block' %>
+            </div>
+          <% end %>
+          <div class="text-center">
+            <%= link_to '新規登録はこちら', new_user_registration_path, class: 'btn btn-link' %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

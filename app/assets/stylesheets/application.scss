@@ -1,8 +1,7 @@
 @import "bootstrap";
-
+// ヘッダー
 .navbar-custom {
   background-color: #2972bb; // 任意の背景色に変更
-  color: #ffffff;
 }
 
 .custom-border {
@@ -11,6 +10,46 @@
   padding: 10px; // 内容がボーダーにくっつかないようにパディングを追加
 }
 
-.near-deadline {
-  background-color: #ffdddd; // 背景色を赤っぽく変更
+/* 境界線のスタイル */
+.border-top {
+  border-top: 2px solid #6c757d; /* ボーダーの色と太さを設定 */
+}
+//　スクロールバー
+.scrollable-content-large {
+  max-height: 600px; /* アイテム一覧の高さを大きく設定 */
+  overflow-y: auto;
+  padding-right: 15px; /* スクロールバーによる内容の重なりを防ぐためのパディング */
+}
+
+.scrollable-content-small {
+  max-height: 200px; /* お知らせフォームの高さを小さく設定 */
+  overflow-y: auto;
+  padding-right: 15px; /* スクロールバーによる内容の重なりを防ぐためのパディング */
+}
+
+
+
+// 登録フォーム、編集フォーム
+.custom-border {
+  border: 2px solid #000;
+  background-color: #f0f0f0;
+  padding: 10px;
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+
+/* メディアクエリを使用してレスポンシブデザインを調整 */
+@media (max-width: 768px) {
+  .custom-border {
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
+
+  .highlight-date {
+    font-size: 1rem;
+  }
+
+  .scrollable-content-large, .scrollable-content-small {
+    max-height: 300px; /* スマートフォン画面用に高さを調整 */
+  }
 }
