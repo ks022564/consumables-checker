@@ -73,49 +73,47 @@
     </div>
   </div>
   <div class="scrollable-content-large">
-    <% @items.each do |item| %> 
-      <div class="container-xl custom-border mt-3 mb-3">
-        <div class="row">
-          <div class="col-12 col-md-4">
-            <strong>装置名:</strong>
-            <%= item.equipment_name %>
-          </div>
-          <div class="col-12 col-md-4">
-            <strong>型番:</strong>
-            <%= item.equipment_model_number %>
-          </div>
-          <div class="col-12 col-md-4">
-            <strong>シリアルナンバー:</strong>
-            <%= item.serial_number %>
-          </div>
-          <div class="col-12 col-md-4">
-            <strong>消耗品名:</strong>
-            <%= item.consumable_name %>
-          </div>
-          <div class="col-12 col-md-4">
-            <strong>消耗品型番:</strong>
-            <%= item.consumable_model_number %>
-          </div>
-          <div class="col-12 col-md-4">
-            <strong>メーカー:</strong>
-            <%= item.consumable_maker %>
-          </div>
-          <div class="col-12 col-md-4 highlight-date">
-            <strong>次回点検予定日:</strong>
-            <%= "item.next_inspection_date" %>
-          </div>
-          <div class="col-12 col-md-4">
-          </div>
-          <div class="col-12 col-md-4">
-            <div class="header-button">
-              <%= link_to "詳細", item_path(item), class: "btn btn-primary" %>
+      <% @items_with_maintenance_dates.each do |item_with_dates| %>
+        <div class="container-xl custom-border mt-3 mb-3">
+          <div class="row">
+            <div class="col-12 col-md-4">
+              <strong>装置名:</strong>
+              <%= item_with_dates[:item].equipment_name %>
+            </div>
+            <div class="col-12 col-md-4">
+              <strong>型番:</strong>
+              <%= item_with_dates[:item].equipment_model_number %>
+            </div>
+            <div class="col-12 col-md-4">
+              <strong>シリアルナンバー:</strong>
+              <%= item_with_dates[:item].serial_number %>
+            </div>
+            <div class="col-12 col-md-4">
+              <strong>消耗品名:</strong>
+              <%= item_with_dates[:item].consumable_name %>
+            </div>
+            <div class="col-12 col-md-4">
+              <strong>消耗品型番:</strong>
+              <%= item_with_dates[:item].consumable_model_number %>
+            </div>
+            <div class="col-12 col-md-4">
+              <strong>メーカー:</strong>
+              <%= item_with_dates[:item].consumable_maker %>
+            </div>
+            <div class="col-12 col-md-4 highlight-date">
+              <strong>次回点検予定日:</strong>
+              <%= item_with_dates[:next_maintenance_day] %>
+            </div>
+            <div class="col-12 col-md-4">
+            </div>
+            <div class="col-12 col-md-4">
+              <div class="header-button">
+                <%= link_to "詳細", item_path(item_with_dates[:item]), class: "btn btn-primary" %>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    <% end %> 
+      <% end %>
+    </div>
   </div>
 </div>
-  
-
-  
