@@ -1,4 +1,7 @@
 class Item < ApplicationRecord
+
+  has_many :maintenance_histories
+
   validates :consumable_name, presence: true
   validates :consumable_model_number, presence: true
   validates :consumable_maker, presence: true

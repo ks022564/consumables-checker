@@ -1,6 +1,6 @@
 <mxfile host="65bd71144e">
     <diagram id="uGBQddHE-NDlUJ498ifw" name="ページ1">
-        <mxGraphModel dx="1825" dy="188" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+        <mxGraphModel dx="1063" dy="188" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
@@ -14,13 +14,13 @@
                     <mxGeometry y="70" width="320" height="120" as="geometry"/>
                 </mxCell>
                 <mxCell id="23" value="maintnance  histories" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;align=center;fontSize=14;" parent="1" vertex="1">
-                    <mxGeometry x="40" y="360" width="320" height="190" as="geometry"/>
+                    <mxGeometry x="50" y="360" width="310" height="190" as="geometry"/>
                 </mxCell>
                 <mxCell id="24" value="belongs_to : item&#10;belongs_to : user" style="text;strokeColor=none;fillColor=none;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=12;" parent="23" vertex="1">
-                    <mxGeometry y="26" width="320" height="44" as="geometry"/>
+                    <mxGeometry y="26" width="310" height="44" as="geometry"/>
                 </mxCell>
                 <mxCell id="25" value="exchange_date : date : not null&#10;next_maintnance_day : date : not null&#10;worker : string : not null&#10;maintnance_comment : text &#10;user : references : not null : foreign_key : true&#10;item : references : not null : foreign_key : true&#10; " style="text;strokeColor=none;fillColor=none;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=12;" parent="23" vertex="1">
-                    <mxGeometry y="70" width="320" height="120" as="geometry"/>
+                    <mxGeometry y="70" width="310" height="120" as="geometry"/>
                 </mxCell>
                 <mxCell id="26" value="users" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;align=center;fontSize=14;" parent="1" vertex="1">
                     <mxGeometry x="480" y="360" width="320" height="190" as="geometry"/>

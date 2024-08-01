@@ -1,0 +1,80 @@
+<%= render "shared/second-header" %>
+
+<!-- app/views/items/show.html.erb -->
+<div class="container mt-5">
+  <h2>アイテム詳細</h2>
+  <div class="row">
+    <div class="col-12 col-md-4">
+      <strong>装置名:</strong>
+      <p><%= @item.equipment_name %></p>
+    </div>
+    <div class="col-12 col-md-4">
+      <strong>型番:</strong>
+      <p><%= @item.equipment_model_number %></p>
+    </div>
+    <div class="col-12 col-md-4">
+      <strong>シリアルナンバー:</strong>
+      <p><%= @item.serial_number %></p>
+    </div>
+    <div class="col-12 col-md-4">
+      <strong>消耗品名:</strong>
+      <p><%= @item.consumable_name %></p>
+    </div>
+    <div class="col-12 col-md-4">
+      <strong>消耗品型番:</strong>
+      <p><%= @item.consumable_model_number %></p>
+    </div>
+    <div class="col-12 col-md-4">
+      <strong>メーカー:</strong>
+      <p><%= @item.consumable_maker %></p>
+    </div>
+    <div class="col-12 col-md-4">
+      <strong>点検周期:</strong>
+      <p><%= @item.inspection_interval %></p>
+    </div>
+    <div class="col-12 col-md-4">
+      <strong>使用開始日:</strong>
+      <p><%= @item.start_date %></p>
+    </div>
+
+    <h3>点検情報</h3>
+  <div class="row">
+    <div class="col-12">
+      <strong>前回点検日:</strong>
+      <p><%= @previous_inspection_date %></p>
+    </div>
+    <div class="col-12">
+      <strong>次回交換予定日:</strong>
+      <p><%= @next_maintenance_day %></p>
+    </div>
+  </div>
+
+  <h3>新しい点検情報を追加</h3>
+  <%= form_with(model: [@item, @maintenance_history], local: true) do |form| %>
+    <div class="form-group highlight-date mb-4">
+      <%= form.label :exchange_date, "点検作業日" %>
+      <%= form.date_field :exchange_date, class: 'form-control' %>
+    </div>
+
+    <div class="form-group highlight-date mb-4">
+      <%= form.label :next_maintnance_day, "次回交換予定日" %>
+      <%= form.date_field :next_maintnance_day, class: 'form-control', required: true, value: @next_maintenance_day %>
+    </div>
+
+    <div class="form-group mb-4">
+      <%= form.label :maintenance_comment, "コメント" %>
+      <%= form.text_area :maintenance_comment, class: 'form-control' %>
+    </div>
+
+    <div class="form-group mb-4">
+      <%= form.label :worker, "実施者" %>
+      <%= form.text_field :worker, class: 'form-control' %>
+    </div>
+
+    <div class="form-group mb-4">
+      <%= form.submit '登録', class: 'btn btn-primary' %>
+    </div>
+  <% end %>
+
+  <%= link_to "戻る", items_path, class: "btn btn-secondary mt-3" %>
+</div>

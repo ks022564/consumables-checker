@@ -1,60 +1,7 @@
 <%= render "shared/header" %>
-
+<%= stylesheet_link_tag 'custom', media: 'all' %>
 <!-- app/views/items/index.html.erb -->
 <div class="container mt-5">
-  <!-- アイテム一覧 -->
-  <div class="row mb-4">
-    <div class="col">
-      <h2 class="text-left">登録されたアイテム一覧</h2>
-    </div>
-  </div>
-  <div class="scrollable-content-large">
-    <% @items.each do |item| %> 
-      <div class="container-xl custom-border mt-3 mb-3">
-        <div class="row">
-          <div class="col-12 col-md-4">
-            <strong>装置名:</strong>
-            <%= item.equipment_name %>
-          </div>
-          <div class="col-12 col-md-4">
-            <strong>型番:</strong>
-            <%= item.equipment_model_number %>
-          </div>
-          <div class="col-12 col-md-4">
-            <strong>シリアルナンバー:</strong>
-            <%= item.serial_number %>
-          </div>
-          <div class="col-12 col-md-4">
-            <strong>消耗品名:</strong>
-            <%= item.consumable_name %>
-          </div>
-          <div class="col-12 col-md-4">
-            <strong>消耗品型番:</strong>
-            <%= item.consumable_model_number %>
-          </div>
-          <div class="col-12 col-md-4">
-            <strong>メーカー:</strong>
-            <%= item.consumable_maker %>
-          </div>
-          <div class="col-12 col-md-4 highlight-date">
-            <strong>次回点検予定日:</strong>
-            <%= "item.next_inspection_date" %>
-          </div>
-          <div class="col-12 col-md-4">
-          </div>
-          <div class="col-12 col-md-4">
-            <div class="header-button">
-              <%= link_to "編集", "edit_item_path(item)", class: "btn btn-primary" %>
-            </div>
-          </div>
-        </div>
-      </div>
-    <% end %> 
-  </div>
-
-  <!-- 境界線 -->
-  <hr class="my-5 border-top border-secondary">
-
   <!-- お知らせフォーム -->
   <div class="row mb-4">
     <div class="col">
@@ -95,13 +42,80 @@
           </div>
           <div class="col-12 col-md-4">
           </div>
-          <div class="col-12 col-md-4">
+          < class="col-12 col-md-4">
             <div class="header-button">
-              <%= link_to "編集", "edit_item_path(item)", class: "btn btn-primary" %>
+              <%# <%= link_to "詳細", item_path(item), class: "btn btn-primary" %>
             </div>
           </div>
         </div>
       </div>
     <%# <% end %> 
   </div>
+
+  <!-- 境界線 -->
+  <hr class="my-5 border-top border-secondary">
+
+<div class="container mt-5">
+  <!-- ソートリンク -->
+  <div class="row mb-4">
+    <div class="col">
+      <h2 class="text-left">登録されたアイテム一覧</h2>
+      <%= form_with url: items_path, method: :get, local: true, id: 'sort_form' do %>
+          <%= select_tag :sort, options_for_select([
+            ['装置名昇順', 'equipment_name_asc'],
+            ['装置名降順', 'equipment_name_desc'],
+            ['消耗品昇順', 'consumable_name_asc'],
+            ['消耗品降順', 'consumable_name_desc'],
+            ['次回点検予定日昇順', 'next_inspection_date_asc'],
+            ['次回点検予定日降順', 'next_inspection_date_desc']
+          ], params[:sort]), class: 'form-select', onchange: 'this.form.submit();' %>
+        <% end %>
+    </div>
+  </div>
+  <div class="scrollable-content-large">
+    <% @items.each do |item| %> 
+      <div class="container-xl custom-border mt-3 mb-3">
+        <div class="row">
+          <div class="col-12 col-md-4">
+            <strong>装置名:</strong>
+            <%= item.equipment_name %>
+          </div>
+          <div class="col-12 col-md-4">
+            <strong>型番:</strong>
+            <%= item.equipment_model_number %>
+          </div>
+          <div class="col-12 col-md-4">
+            <strong>シリアルナンバー:</strong>
+            <%= item.serial_number %>
+          </div>
+          <div class="col-12 col-md-4">
+            <strong>消耗品名:</strong>
+            <%= item.consumable_name %>
+          </div>
+          <div class="col-12 col-md-4">
+            <strong>消耗品型番:</strong>
+            <%= item.consumable_model_number %>
+          </div>
+          <div class="col-12 col-md-4">
+            <strong>メーカー:</strong>
+            <%= item.consumable_maker %>
+          </div>
+          <div class="col-12 col-md-4 highlight-date">
+            <strong>次回点検予定日:</strong>
+            <%= "item.next_inspection_date" %>
+          </div>
+          <div class="col-12 col-md-4">
+          </div>
+          <div class="col-12 col-md-4">
+            <div class="header-button">
+              <%= link_to "詳細", item_path(item), class: "btn btn-primary" %>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% end %> 
+  </div>
 </div>
+  
+
+  
