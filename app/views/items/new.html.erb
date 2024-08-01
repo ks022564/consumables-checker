@@ -1,16 +1,16 @@
-
+<%= render "shared/second-header" %>
 
 <!-- app/views/products/new.html.erb -->
-<%= form_with model: @product, local: true, class: "needs-validation" do |form| %>
+<%= form_with model: @item, url: items_path,local: true, class: "needs-validation" do |form| %>
   <div class="container mt-5">
     <div class="row mb-4">
       <div class="col">
-        <h2 class="text-left">商品登録フォーム</h2>
+        <h2 class="text-left">アイテム登録フォーム</h2>
       </div>
     </div>
     <div class="row mb-4">
       <div class="col">
-        <p>こちらのフォームから新規商品を登録できます。すべてのフィールドに正確な情報を入力してください。</p>
+        <p>こちらのフォームからアイテムを登録できます。以下の項目に情報を入力してください。</p>
       </div>
     </div>
     <div class="row mb-3">
@@ -44,8 +44,8 @@
         <div class="invalid-feedback">消耗品型番を入力してください。</div>
       </div>
       <div class="col-md-6">
-        <%= form.label :manufacturer, "メーカー", class: "form-label" %>
-        <%= form.text_field :manufacturer, placeholder: "例: 〇〇工業", class: "form-control", required: true %>
+        <%= form.label :consumable_maker, "メーカー", class: "form-label" %>
+        <%= form.text_field :consumable_maker, placeholder: "例: 〇〇工業", class: "form-control", required: true %>
         <div class="invalid-feedback">メーカーを入力してください。</div>
       </div>
     </div>
@@ -68,3 +68,4 @@
     </div>
   </div>
 <% end %>
+

@@ -1,6 +1,6 @@
 <mxfile host="65bd71144e">
     <diagram id="uGBQddHE-NDlUJ498ifw" name="ページ1">
-        <mxGraphModel dx="1659" dy="571" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+        <mxGraphModel dx="1825" dy="188" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
@@ -10,7 +10,7 @@
                 <mxCell id="18" value="has_many : maintnance  histories&#10;has_many : notifications" style="text;strokeColor=none;fillColor=none;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=12;" parent="17" vertex="1">
                     <mxGeometry y="26" width="320" height="44" as="geometry"/>
                 </mxCell>
-                <mxCell id="19" value="consumable : string : not null&#10;consumable_model_number : string : not null&#10;consumable_maker : string : not null&#10;unit_name : string : not null&#10;unit_model_number : string : not null&#10;unit_serial_number : string : not null&#10;replacement_cycle : intger : not null&#10;last_exchange_date : date : not null" style="text;strokeColor=none;fillColor=none;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=12;" parent="17" vertex="1">
+                <mxCell id="19" value="consumable_name : string : not null&#10;consumable_model_number : string : not null&#10;consumable_maker : string : not null&#10;equipment_name : string : not null&#10;equipment_model_number : string : not null&#10;serial_number : string : not null&#10;inspection_interval : intger : not null&#10;start_date : date : not null" style="text;strokeColor=none;fillColor=none;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=12;" parent="17" vertex="1">
                     <mxGeometry y="70" width="320" height="120" as="geometry"/>
                 </mxCell>
                 <mxCell id="23" value="maintnance  histories" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;align=center;fontSize=14;" parent="1" vertex="1">

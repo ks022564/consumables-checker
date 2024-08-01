@@ -9,32 +9,32 @@
     </div>
   </div>
   <div class="scrollable-content-large">
-    <%# <% @items.each do |item| %> 
+    <% @items.each do |item| %> 
       <div class="container-xl custom-border mt-3 mb-3">
         <div class="row">
           <div class="col-12 col-md-4">
             <strong>装置名:</strong>
-            <%= "item.equipment_name" %>
+            <%= item.equipment_name %>
           </div>
           <div class="col-12 col-md-4">
             <strong>型番:</strong>
-            <%= "item.equipment_model_number" %>
+            <%= item.equipment_model_number %>
           </div>
           <div class="col-12 col-md-4">
             <strong>シリアルナンバー:</strong>
-            <%= "item.serial_number" %>
+            <%= item.serial_number %>
           </div>
           <div class="col-12 col-md-4">
             <strong>消耗品名:</strong>
-            <%= "item.consumable_name" %>
+            <%= item.consumable_name %>
           </div>
           <div class="col-12 col-md-4">
             <strong>消耗品型番:</strong>
-            <%= "item.consumable_model_number" %>
+            <%= item.consumable_model_number %>
           </div>
           <div class="col-12 col-md-4">
             <strong>メーカー:</strong>
-            <%= "item.manufacturer" %>
+            <%= item.consumable_maker %>
           </div>
           <div class="col-12 col-md-4 highlight-date">
             <strong>次回点検予定日:</strong>
@@ -49,7 +49,7 @@
           </div>
         </div>
       </div>
-    <%# <% end %> 
+    <% end %> 
   </div>
 
   <!-- 境界線 -->
@@ -87,7 +87,7 @@
           </div>
           <div class="col-12 col-md-4">
             <strong>メーカー:</strong>
-            <%= "item.manufacturer" %>
+            <%= "item.consumable_maker" %>
           </div>
           <div class="col-12 col-md-4 highlight-date">
             <strong>次回点検予定日:</strong>
