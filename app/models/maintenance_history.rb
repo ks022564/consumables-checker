@@ -4,5 +4,8 @@ class MaintenanceHistory < ApplicationRecord
 
   belongs_to :user
 
-  
+  validates :exchange_date, presence: true
+  validates :next_maintnance_day, presence: true
+  validates :maintenance_comment, presence: true
+  validates :worker, presence: true
 end

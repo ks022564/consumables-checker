@@ -9,22 +9,36 @@ class MaintenanceHistoriesController < ApplicationController
 
     if @maintenance_history.save
       @item = Item.find(params[:id])
-    @maintenance_history = @item.maintenance_histories.build
+      @maintenance_history = @item.maintenance_histories.build
 
-    latest_history = @item.maintenance_histories.order(created_at: :desc).first
+      latest_history = @item.maintenance_histories.order(created_at: :desc).first
 
-    if latest_history
-      @previous_inspection_date = latest_history.exchange_date
+      if latest_history
+        @previous_inspection_date = latest_history.exchange_date
+      else
+        @previous_inspection_date = @item.start_date
+      end
+
+      if @previous_inspection_date && @item.inspection_interval
+        @next_maintenance_day = @previous_inspection_date + @item.inspection_interval.days
+      end
+        redirect_to @maintenance_history, notice: 'Maintenance history was successfully created.'
     else
-      @previous_inspection_date = @item.start_date
-    end
+      @item = Item.find(params[:id])
+      @maintenance_history = @item.maintenance_histories.build
 
-    if @previous_inspection_date && @item.inspection_interval
-      @next_maintenance_day = @previous_inspection_date + @item.inspection_interval.days
-    end
-      redirect_to @maintenance_history, notice: 'Maintenance history was successfully created.'
-    else
-      render :new
+      latest_history = @item.maintenance_histories.order(created_at: :desc).first
+
+      if latest_history
+        @previous_inspection_date = latest_history.exchange_date
+      else
+        @previous_inspection_date = @item.start_date
+      end
+
+      if @previous_inspection_date && @item.inspection_interval
+        @next_maintenance_day = @previous_inspection_date + @item.inspection_interval.days
+      end
+        redirect_to @maintenance_history
     end
   end
 

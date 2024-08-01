@@ -1,6 +1,6 @@
 class Item < ApplicationRecord
 
-  has_many :maintenance_histories
+  has_many :maintenance_histories, dependent: :destroy
 
   validates :consumable_name, presence: true
   validates :consumable_model_number, presence: true

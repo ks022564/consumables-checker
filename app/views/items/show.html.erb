@@ -1,52 +1,52 @@
 <%= render "shared/second-header" %>
 
-<!-- app/views/items/show.html.erb -->
 <div class="container mt-5">
   <h2>アイテム詳細</h2>
   <div class="row">
-    <div class="col-12 col-md-4">
+    <div class="col-12 col-md-4 mb-2">
       <strong>装置名:</strong>
-      <p><%= @item.equipment_name %></p>
+      <%= @item.equipment_name %>
     </div>
-    <div class="col-12 col-md-4">
+    <div class="col-12 col-md-4 mb-2">
       <strong>型番:</strong>
-      <p><%= @item.equipment_model_number %></p>
+      <%= @item.equipment_model_number %>
     </div>
-    <div class="col-12 col-md-4">
+    <div class="col-12 col-md-4 mb-2">
       <strong>シリアルナンバー:</strong>
-      <p><%= @item.serial_number %></p>
+      <%= @item.serial_number %>
     </div>
-    <div class="col-12 col-md-4">
+    <div class="col-12 col-md-4 mb-2">
       <strong>消耗品名:</strong>
-      <p><%= @item.consumable_name %></p>
+      <%= @item.consumable_name %>
     </div>
-    <div class="col-12 col-md-4">
+    <div class="col-12 col-md-4 mb-2">
       <strong>消耗品型番:</strong>
-      <p><%= @item.consumable_model_number %></p>
+      <%= @item.consumable_model_number %>
     </div>
-    <div class="col-12 col-md-4">
+    <div class="col-12 col-md-4 mb-2">
       <strong>メーカー:</strong>
-      <p><%= @item.consumable_maker %></p>
+      <%= @item.consumable_maker %>
     </div>
-    <div class="col-12 col-md-4">
+    <div class="col-12 col-md-4 mb-2">
       <strong>点検周期:</strong>
-      <p><%= @item.inspection_interval %></p>
+      <%= @item.inspection_interval %>
     </div>
-    <div class="col-12 col-md-4">
+    <div class="col-12 col-md-4 mb-2">
       <strong>使用開始日:</strong>
-      <p><%= @item.start_date %></p>
+      <%= @item.start_date %>
     </div>
+  </div>
 
-    <h3>点検情報</h3>
+  <h3>点検情報</h3>
   <div class="row">
-    <div class="col-12">
+    <div class="col-12 col-md-6">
       <strong>前回点検日:</strong>
       <p><%= @previous_inspection_date %></p>
     </div>
-    <div class="col-12">
-      <strong>次回交換予定日:</strong>
+    <div class="col-12 col-md-6">
+      <strong>交換予定日:</strong>
       <p><%= @next_maintenance_day %></p>
-    </div>
+    </div> 
   </div>
 
   <h3>新しい点検情報を追加</h3>
@@ -73,8 +73,8 @@
 
     <div class="form-group mb-4">
       <%= form.submit '登録', class: 'btn btn-primary' %>
+      <%= link_to '削除', item_path, data: { turbo_method: :delete },  class: 'btn btn-secondary ml-2' %>
+      <%= link_to '戻る', items_path, class: 'btn btn-secondary ml-2' %>
     </div>
   <% end %>
-
-  <%= link_to "戻る", items_path, class: "btn btn-secondary mt-3" %>
 </div>
