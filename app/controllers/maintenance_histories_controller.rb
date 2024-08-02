@@ -1,5 +1,10 @@
 class MaintenanceHistoriesController < ApplicationController
 
+  def index
+    @maintenance_histories = MaintenanceHistory.all
+    
+  end
+
   def new
     @maintenance_history = MaintenanceHistory.new
   end

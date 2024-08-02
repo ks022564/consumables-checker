@@ -1,0 +1,31 @@
+<%= render "shared/second-header" %>
+
+<div class="container mt-4">
+  <h1 class="mb-4">メンテナンス履歴一覧</h1>
+  <div class="table-responsive">
+    <table class="table table-bordered table-striped">
+      <thead>
+        <tr>
+          <th>装置名</th>
+          <th>型番</th>
+          <th>シリアルナンバー</th>
+          <th>消耗品名</th>
+          <th>消耗品型番</th>
+          <th>交換日</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @maintenance_histories.each do |history| %>
+          <tr>
+            <td><%= history.item.equipment_name %></td>
+            <td><%= history.item.equipment_model_number %></td>
+            <td><%= history.item.serial_number %></td>
+            <td><%= history.item.consumable_name %></td>
+            <td><%= history.item.consumable_model_number %></td>
+            <td><%= history.exchange_date %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

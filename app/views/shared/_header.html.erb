@@ -13,6 +13,9 @@
           <li class="nav-item">
             <%= link_to "アイテム登録", new_item_path, class: "nav-link" %>
           </li>
+          <li class="nav-item">
+            <%= link_to "点検履歴", all_maintenance_histories_path, class: "nav-link" %>
+          </li>
         </ul>
       <% else %>
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
@@ -23,7 +26,7 @@
             <%= link_to "ログイン", user_session_path, class: "nav-link" %>
           </li>
         </ul>
-      <% end %>  
+      <% end %>
       <form class="d-flex" role="search">
         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
         <button class="btn btn-outline-success" type="submit">Search</button>

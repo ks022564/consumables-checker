@@ -53,3 +53,23 @@
     max-height: 300px; /* スマートフォン画面用に高さを調整 */
   }
 }
+
+
+// 履歴一覧表示画面のレスポンシブデザイン調整
+.table-responsive {
+  table {
+    white-space: nowrap;
+  }
+}
+
+@media (max-width: 767.98px) {
+  .table-responsive {
+    font-size: 0.8em; // 必要に応じて調整
+  }
+
+  .table th, .table td {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}

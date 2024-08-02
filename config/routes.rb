@@ -5,6 +5,7 @@ Rails.application.routes.draw do
     collection do
       get 'sort'
     end
-    resources :maintenance_histories, only: [:new, :create]
+    resources :maintenance_histories, only: [:new, :create, :index]
   end
+  get 'maintenance_histories', to: 'maintenance_histories#index', as: 'all_maintenance_histories'
 end
