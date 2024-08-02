@@ -3,22 +3,6 @@ class ItemsController < ApplicationController
 
   def index
     @items = Item.all
-    if params[:sort].present?
-      case params[:sort]
-      when 'equipment_name_asc'
-        @items = @items.order(equipment_name: :asc)
-      when 'equipment_name_desc'
-        @items = @items.order(equipment_name: :desc)
-      when 'consumable_name_asc'
-        @items = @items.order(consumable_name: :asc)
-      when 'consumable_name_desc'
-        @items = @items.order(consumable_name: :desc)
-      when 'next_inspection_date_asc'
-        @items = @items.order(next_inspection_date: :asc)
-      when 'next_inspection_date_desc'
-        @items = @items.order(next_inspection_date: :desc)
-      end
-    end
     @items_with_maintenance_dates = @items.map do |item|
       latest_history = item.maintenance_histories.order(created_at: :desc).first
       previous_inspection_date = latest_history ? latest_history.exchange_date : item.start_date
@@ -29,8 +13,24 @@ class ItemsController < ApplicationController
         next_maintenance_day: next_maintenance_day
       }
     end
-    
+    if params[:sort].present?
+      case params[:sort]
+      when 'equipment_name_asc'
+        @items_with_maintenance_dates.sort_by! { |item_with_dates| item_with_dates[:item].equipment_name }
+      when 'equipment_name_desc'
+        @items_with_maintenance_dates.sort_by! { |item_with_dates| item_with_dates[:item].equipment_name }.reverse!
+      when 'consumable_name_asc'
+        @items_with_maintenance_dates.sort_by! { |item_with_dates| item_with_dates[:item].consumable_name }
+      when 'consumable_name_desc'
+        @items_with_maintenance_dates.sort_by! { |item_with_dates| item_with_dates[:item].consumable_name }.reverse!
+      when 'next_inspection_date_asc'
+        @items_with_maintenance_dates.sort_by! { |item_with_dates| item_with_dates[:next_maintenance_day] || Date.new(3000, 1, 1) }
+      when 'next_inspection_date_desc'
+        @items_with_maintenance_dates.sort_by! { |item_with_dates| item_with_dates[:next_maintenance_day] || Date.new(3000, 1, 1) }.reverse!
+      end
+    end
   end
+
 
   def new
     @item = Item.new

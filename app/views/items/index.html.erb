@@ -62,12 +62,12 @@
       <h2 class="text-left">登録されたアイテム一覧</h2>
       <%= form_with url: items_path, method: :get, local: true, id: 'sort_form' do %>
           <%= select_tag :sort, options_for_select([
+            ['点検日が近い', 'next_inspection_date_asc'],
+            ['点検日が遅い', 'next_inspection_date_desc'],
             ['装置名昇順', 'equipment_name_asc'],
             ['装置名降順', 'equipment_name_desc'],
             ['消耗品昇順', 'consumable_name_asc'],
-            ['消耗品降順', 'consumable_name_desc'],
-            ['次回点検予定日昇順', 'next_inspection_date_asc'],
-            ['次回点検予定日降順', 'next_inspection_date_desc']
+            ['消耗品降順', 'consumable_name_desc']
           ], params[:sort]), class: 'form-select', onchange: 'this.form.submit();' %>
         <% end %>
     </div>
