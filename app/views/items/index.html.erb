@@ -23,7 +23,7 @@
   <% end %>
 
   <div class="scrollable-content-large">
-    <% @items_with_maintenance_dates.each do |item_with_dates| %>
+    <% @near_inspection_items.each do |item_with_dates| %>
       <div class="container-xl custom-border mt-3 mb-3">
         <div class="row">
           <div class="col-12 col-md-4">
@@ -80,7 +80,9 @@
             ['装置名昇順', 'equipment_name_asc'],
             ['装置名降順', 'equipment_name_desc'],
             ['消耗品昇順', 'consumable_name_asc'],
-            ['消耗品降順', 'consumable_name_desc']
+            ['消耗品降順', 'consumable_name_desc'],
+            ['登録日昇順', 'created_at_asc'],
+            ['登録日降順', 'created_at_desc']
           ], params[:sort]), class: 'form-select', onchange: 'this.form.submit();' %>
         <% end %>
     </div>

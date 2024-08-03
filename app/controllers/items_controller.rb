@@ -4,6 +4,8 @@ class ItemsController < ApplicationController
 
   def index
     @items = Item.all
+
+    # 各アイテムについて次回点検予定日を計算
     @items_with_maintenance_dates = @items.map do |item|
       latest_history = item.maintenance_histories.order(created_at: :desc).first
       previous_inspection_date = latest_history ? latest_history.exchange_date : item.start_date
@@ -14,12 +16,9 @@ class ItemsController < ApplicationController
         next_maintenance_day: next_maintenance_day
       }
     end
-    if params[:days].present?
-      days = params[:days].to_i
-      @items_with_maintenance_dates.select! do |item_with_dates|
-        item_with_dates[:next_maintenance_day] && item_with_dates[:next_maintenance_day] <= Date.today + days.days
-      end
-    end
+
+    # デフォルトで交換日時の近い順にソート
+    @items_with_maintenance_dates.sort_by! { |item_with_dates| item_with_dates[:next_maintenance_day] || Date.new(3000, 1, 1) }
 
     if params[:sort].present?
       case params[:sort]
@@ -35,6 +34,23 @@ class ItemsController < ApplicationController
         @items_with_maintenance_dates.sort_by! { |item_with_dates| item_with_dates[:next_maintenance_day] || Date.new(3000, 1, 1) }
       when 'next_inspection_date_desc'
         @items_with_maintenance_dates.sort_by! { |item_with_dates| item_with_dates[:next_maintenance_day] || Date.new(3000, 1, 1) }.reverse!
+        when 'created_at_asc'
+        @items_with_maintenance_dates.sort_by! { |item_with_dates| item_with_dates[:item].created_at }
+      when 'created_at_desc'
+        @items_with_maintenance_dates.sort_by! { |item_with_dates| item_with_dates[:item].created_at }.reverse!
+      end
+    end
+
+    #「点検が近い消耗品のお知らせ」にだけ日数設定を適用
+    @near_inspection_items = @items_with_maintenance_dates.dup
+    if params[:days].present?
+      days = params[:days].to_i
+      @near_inspection_items.select! do |item_with_dates|
+        item_with_dates[:next_maintenance_day] && item_with_dates[:next_maintenance_day] <= Date.today + days.days
+      end
+    else
+      @near_inspection_items.select! do |item_with_dates|
+        item_with_dates[:next_maintenance_day] && item_with_dates[:next_maintenance_day] <= Date.today + 7.days
       end
     end
   end

@@ -2,7 +2,7 @@ class MaintenanceHistoriesController < ApplicationController
   before_action :authenticate_user!, only: [:new, :create]
 
   def index
-    @maintenance_histories = MaintenanceHistory.order(created_at: :desc)
+    @maintenance_histories = MaintenanceHistory.order(created_at: :desc).limit(30)
     
   end
 
