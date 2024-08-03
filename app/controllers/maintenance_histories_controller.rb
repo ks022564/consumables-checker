@@ -10,12 +10,11 @@ class MaintenanceHistoriesController < ApplicationController
   end
 
   def create
-    @maintenance_history = MaintenanceHistory.new(maintenance_history_params)
-
+    @item = Item.find(params[:item_id])
+    @maintenance_history = @item.maintenance_histories.build(maintenance_history_params)
+    
     if @maintenance_history.save
-      @item = Item.find(params[:id])
-      @maintenance_history = @item.maintenance_histories.build
-
+      
       latest_history = @item.maintenance_histories.order(created_at: :desc).first
 
       if latest_history
@@ -27,10 +26,8 @@ class MaintenanceHistoriesController < ApplicationController
       if @previous_inspection_date && @item.inspection_interval
         @next_maintenance_day = @previous_inspection_date + @item.inspection_interval.days
       end
-        redirect_to @maintenance_history, notice: 'Maintenance history was successfully created.'
+        redirect_to @item
     else
-      @item = Item.find(params[:id])
-      @maintenance_history = @item.maintenance_histories.build
 
       latest_history = @item.maintenance_histories.order(created_at: :desc).first
 
@@ -43,15 +40,13 @@ class MaintenanceHistoriesController < ApplicationController
       if @previous_inspection_date && @item.inspection_interval
         @next_maintenance_day = @previous_inspection_date + @item.inspection_interval.days
       end
-        redirect_to @maintenance_history
+        redirect_to @item
     end
   end
-
-
 
   private
 
   def maintenance_history_params
-    params.require(:maintenance_history).permit(:exchange_date, :next_maintnance_day, :worker, :maintenance_comment).merge(user_id: current_user.id, item_id: params[:item_id])
+    params.require(:maintenance_history).permit(:exchange_date, :next_maintenance_day, :worker, :maintenance_comment).merge(user_id: current_user.id, item_id: params[:item_id])
   end
 end

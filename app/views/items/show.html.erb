@@ -51,7 +51,11 @@
     <div class="col-12 col-md-4 mb-2">
       <strong>点検予定日:</strong>
       <%= @next_maintenance_day %>
-    </div> 
+    </div>
+    <div class="col-12 col-md-4 mb-2">
+      <strong>コメント:</strong>
+      <p style="word-wrap: break-word; white-space: pre-wrap;"><%= @maintenance_comment %></p>
+    </div>
   </div>
 
   <% if user_signed_in? %>  
@@ -63,8 +67,8 @@
       </div>
 
       <div class="form-group highlight-date mb-4">
-        <%= form.label :next_maintnance_day, "次回交換予定日" %>
-        <%= form.date_field :next_maintnance_day, class: 'form-control', id: 'next_maintenance_day', required: true %>
+        <%= form.label :next_maintenance_day, "次回交換予定日" %>
+        <%= form.date_field :next_maintenance_day, class: 'form-control', id: 'next_maintenance_day', required: true %>
       </div>
 
       <%= hidden_field_tag :inspection_interval, @item.inspection_interval, id: 'inspection_interval' %>

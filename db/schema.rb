@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_08_01_053437) do
+ActiveRecord::Schema[7.0].define(version: 2024_08_02_081845) do
   create_table "items", charset: "utf8mb4", force: :cascade do |t|
     t.string "consumable_name", null: false
     t.string "consumable_model_number", null: false
@@ -26,7 +26,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_08_01_053437) do
 
   create_table "maintenance_histories", charset: "utf8mb4", force: :cascade do |t|
     t.date "exchange_date", null: false
-    t.date "next_maintnance_day", null: false
+    t.date "next_maintenance_day", null: false
     t.string "worker", null: false
     t.text "maintenance_comment", null: false
     t.bigint "user_id", null: false

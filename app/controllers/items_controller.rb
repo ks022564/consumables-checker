@@ -60,6 +60,7 @@ class ItemsController < ApplicationController
     if @previous_inspection_date && @item.inspection_interval
       @next_maintenance_day = @previous_inspection_date + @item.inspection_interval.days
     end
+    @maintenance_comment = latest_history&.maintenance_comment
   end
 
   def destroy
