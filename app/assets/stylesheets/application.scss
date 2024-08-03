@@ -1,16 +1,13 @@
 @import "bootstrap";
-// ヘッダー
+// ヘッダー//
+
 .navbar-custom {
-  background-color: #2972bb; // 任意の背景色に変更
+  background-color: #2972bb; 
 }
 
-.custom-border {
-  border: 2px solid #000; // ボーダーの色と太さを指定
-  background-color: #f0f0f0; // ボーダー内の背景色を指定
-  padding: 10px; // 内容がボーダーにくっつかないようにパディングを追加
-}
+// 一覧表示ページ //
 
-/* 境界線のスタイル */
+// 境界線のスタイル //
 .border-top {
   border-top: 2px solid #6c757d; /* ボーダーの色と太さを設定 */
 }
@@ -27,9 +24,14 @@
   padding-right: 15px; /* スクロールバーによる内容の重なりを防ぐためのパディング */
 }
 
+//ソートフォームレイアウト　//
+.form-select {
+  width: 150px; 
+  display: inline-block;
+  margin-right: 10px;
+} 
 
-
-// 登録フォーム、編集フォーム
+// アイテム一覧アイテムごとの表示　//
 .custom-border {
   border: 2px solid #000;
   background-color: #f0f0f0;
@@ -38,7 +40,7 @@
   margin-bottom: 30px;
 }
 
-/* メディアクエリを使用してレスポンシブデザインを調整 */
+// メディアクエリを使用してレスポンシブデザインを調整 //
 @media (max-width: 768px) {
   .custom-border {
     margin-top: 20px;

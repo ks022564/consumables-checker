@@ -1,3 +1,4 @@
+// 点検作業日を選択すると自動的に次回交換予定日が計算されて入力される //
 document.addEventListener('turbo:load', function() {
   const exchangeDateInput = document.getElementById('exchange_date');
   const nextMaintenanceDayInput = document.getElementById('next_maintenance_day');
@@ -15,3 +16,5 @@ document.addEventListener('turbo:load', function() {
     });
   }
 });
+
+

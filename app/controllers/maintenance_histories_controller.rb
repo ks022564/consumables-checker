@@ -1,7 +1,8 @@
 class MaintenanceHistoriesController < ApplicationController
+  before_action :authenticate_user!, only: [:new, :create]
 
   def index
-    @maintenance_histories = MaintenanceHistory.all
+    @maintenance_histories = MaintenanceHistory.order(created_at: :desc)
     
   end
 
@@ -14,32 +15,8 @@ class MaintenanceHistoriesController < ApplicationController
     @maintenance_history = @item.maintenance_histories.build(maintenance_history_params)
     
     if @maintenance_history.save
-      
-      latest_history = @item.maintenance_histories.order(created_at: :desc).first
-
-      if latest_history
-        @previous_inspection_date = latest_history.exchange_date
-      else
-        @previous_inspection_date = @item.start_date
-      end
-
-      if @previous_inspection_date && @item.inspection_interval
-        @next_maintenance_day = @previous_inspection_date + @item.inspection_interval.days
-      end
         redirect_to @item
     else
-
-      latest_history = @item.maintenance_histories.order(created_at: :desc).first
-
-      if latest_history
-        @previous_inspection_date = latest_history.exchange_date
-      else
-        @previous_inspection_date = @item.start_date
-      end
-
-      if @previous_inspection_date && @item.inspection_interval
-        @next_maintenance_day = @previous_inspection_date + @item.inspection_interval.days
-      end
         redirect_to @item
     end
   end

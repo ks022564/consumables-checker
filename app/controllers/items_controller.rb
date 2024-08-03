@@ -1,18 +1,26 @@
 class ItemsController < ApplicationController
-  
+  before_action :authenticate_user!, only: [:new, :create, :edit, :update, :destroy]
+  before_action :set_item, only: [:edit, :show, :destroy, :update]
 
   def index
     @items = Item.all
     @items_with_maintenance_dates = @items.map do |item|
       latest_history = item.maintenance_histories.order(created_at: :desc).first
       previous_inspection_date = latest_history ? latest_history.exchange_date : item.start_date
-      next_maintenance_day = previous_inspection_date + item.inspection_interval.days if previous_inspection_date && item.inspection_interval
+      next_maintenance_day = latest_history&.next_maintenance_day || (previous_inspection_date + item.inspection_interval.days if previous_inspection_date && item.inspection_interval)
 
       {
         item: item,
         next_maintenance_day: next_maintenance_day
       }
     end
+
+    @near_inspection_items = @items_with_maintenance_dates.select do |item_with_dates|
+      item_with_dates[:next_maintenance_day] && item_with_dates[:next_maintenance_day] <= Date.today + 7.days
+    end
+
+    @items_with_maintenance_dates.sort_by! { |item_with_dates| item_with_dates[:next_maintenance_day] || Date.new(3000, 1, 1) }
+
     if params[:sort].present?
       case params[:sort]
       when 'equipment_name_asc'
@@ -46,7 +54,6 @@ class ItemsController < ApplicationController
   end
 
   def show
-    @item = Item.find(params[:id])
     @maintenance_history = @item.maintenance_histories.build
 
     latest_history = @item.maintenance_histories.order(created_at: :desc).first
@@ -57,24 +64,24 @@ class ItemsController < ApplicationController
       @previous_inspection_date = @item.start_date
     end
 
-    if @previous_inspection_date && @item.inspection_interval
-      @next_maintenance_day = @previous_inspection_date + @item.inspection_interval.days
-    end
+    history = @item.maintenance_histories.order(created_at: :desc).first
+      if history
+        @next_maintenance_day = history.next_maintenance_day
+      else
+        @next_maintenance_day = @item.start_date + @item.inspection_interval.days
+      end
     @maintenance_comment = latest_history&.maintenance_comment
   end
 
   def destroy
-    @item = Item.find(params[:id])
     @item.destroy
     redirect_to root_path
   end
 
   def edit
-    @item = Item.find(params[:id])
   end
 
   def update
-    @item = Item.find(params[:id])
     if @item.update(item_params)
       redirect_to root_path
     else
@@ -88,5 +95,9 @@ class ItemsController < ApplicationController
   def item_params
     params.require(:item).permit(:consumable_name, :consumable_model_number, :consumable_maker, :equipment_name, :equipment_model_number,
                                   :serial_number, :inspection_interval, :start_date)
+  end
+
+  def set_item
+    @item = Item.find(params[:id])
   end
 end
