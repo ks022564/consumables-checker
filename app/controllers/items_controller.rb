@@ -14,12 +14,12 @@ class ItemsController < ApplicationController
         next_maintenance_day: next_maintenance_day
       }
     end
-
-    @near_inspection_items = @items_with_maintenance_dates.select do |item_with_dates|
-      item_with_dates[:next_maintenance_day] && item_with_dates[:next_maintenance_day] <= Date.today + 7.days
+    if params[:days].present?
+      days = params[:days].to_i
+      @items_with_maintenance_dates.select! do |item_with_dates|
+        item_with_dates[:next_maintenance_day] && item_with_dates[:next_maintenance_day] <= Date.today + days.days
+      end
     end
-
-    @items_with_maintenance_dates.sort_by! { |item_with_dates| item_with_dates[:next_maintenance_day] || Date.new(3000, 1, 1) }
 
     if params[:sort].present?
       case params[:sort]
