@@ -1,9 +1,11 @@
 class ItemsController < ApplicationController
-  before_action :authenticate_user!, only: [:new, :create, :edit, :update, :destroy]
+  before_action :authenticate_user!, only: [:index, :new, :create, :edit, :update, :destroy]
+  before_action :set_company
+  
   before_action :set_item, only: [:edit, :show, :destroy, :update]
 
   def index
-    @items = Item.all
+    @items = @company.items
 
     # 各アイテムについて次回点検予定日を計算
     @items_with_maintenance_dates = @items.map do |item|
@@ -61,7 +63,8 @@ class ItemsController < ApplicationController
   end
 
   def create
-    @item = Item.new(item_params)
+    @item = @company.items.new(item_params)
+    @item.user = current_user
     if @item.save
       redirect_to root_path
     else
@@ -107,6 +110,12 @@ class ItemsController < ApplicationController
 
   
   private
+
+  private
+
+  def set_company
+    @company = current_user.company
+  end
   
   def item_params
     params.require(:item).permit(:consumable_name, :consumable_model_number, :consumable_maker, :equipment_name, :equipment_model_number,
@@ -114,6 +123,6 @@ class ItemsController < ApplicationController
   end
 
   def set_item
-    @item = Item.find(params[:id])
+    @item = @company.items.find(params[:id])
   end
 end

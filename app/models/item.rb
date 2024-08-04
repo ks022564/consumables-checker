@@ -1,7 +1,11 @@
 class Item < ApplicationRecord
+  scope :by_company, ->(company_id) { where(company_id: company_id) }
 
+  belongs_to :company
+  belongs_to :user
   has_many :maintenance_histories, dependent: :destroy
 
+  validates :company, presence: true
   validates :consumable_name, presence: true
   validates :consumable_model_number, presence: true
   validates :consumable_maker, presence: true

@@ -10,7 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_08_02_081845) do
+ActiveRecord::Schema[7.0].define(version: 2024_08_03_101251) do
+  create_table "companies", charset: "utf8mb4", force: :cascade do |t|
+    t.string "company_name", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "items", charset: "utf8mb4", force: :cascade do |t|
     t.string "consumable_name", null: false
     t.string "consumable_model_number", null: false
@@ -22,6 +28,9 @@ ActiveRecord::Schema[7.0].define(version: 2024_08_02_081845) do
     t.date "start_date", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "company_id"
+    t.bigint "user_id", null: false
+    t.index ["user_id"], name: "index_items_on_user_id"
   end
 
   create_table "maintenance_histories", charset: "utf8mb4", force: :cascade do |t|
@@ -33,6 +42,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_08_02_081845) do
     t.bigint "item_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "company_id"
     t.index ["item_id"], name: "index_maintenance_histories_on_item_id"
     t.index ["user_id"], name: "index_maintenance_histories_on_user_id"
   end
@@ -46,10 +56,13 @@ ActiveRecord::Schema[7.0].define(version: 2024_08_02_081845) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "name"
+    t.integer "company_id"
+    t.string "company_name"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "items", "users"
   add_foreign_key "maintenance_histories", "items"
   add_foreign_key "maintenance_histories", "users"
 end
