@@ -10,8 +10,8 @@
         <div class="card-body">
           <%= form_with model: @user, url: user_session_path, local: true do |form| %>
             <div class="field">
-              <%= form.label :company_name %><br />
-              <%= form.text_field :company_name, autofocus: true %>
+              <%= form.label :company_name, '会社名', class: 'form-label' %>
+              <%= form.text_field :company_name, autofocus: true, class: 'form-control', placeholder: '会社名を入力してください' %>
             </div>
             <div class="mb-3">
               <%= form.label :email, 'メールアドレス', class: 'form-label' %>

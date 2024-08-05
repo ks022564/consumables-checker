@@ -2,6 +2,7 @@ require 'rails_helper'
 
 RSpec.describe MaintenanceHistory, type: :model do
   before do
+    @company = FactoryBot.create(:company)
     @maintenance_history = FactoryBot.build(:maintenance_history)
   end
 

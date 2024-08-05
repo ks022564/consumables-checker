@@ -108,9 +108,6 @@ class ItemsController < ApplicationController
     end
   end
 
-  
-  private
-
   private
 
   def set_company
@@ -124,5 +121,6 @@ class ItemsController < ApplicationController
 
   def set_item
     @item = @company.items.find(params[:id])
+    
   end
 end

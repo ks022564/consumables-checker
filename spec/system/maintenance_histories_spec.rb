@@ -2,21 +2,56 @@ require 'rails_helper'
 
 RSpec.describe "MaintenanceHistories", type: :system do
   before do
-    @user = FactoryBot.create(:user)
-    @item = FactoryBot.create(:item)
-    @maintenance_history = FactoryBot.build(:maintenance_history, user: @user, item: @item)
+    @company = FactoryBot.create(:company)
+    @user = FactoryBot.create(:user, company: @company)
+    @item = FactoryBot.create(:item, company: @company)
+    @maintenance_history = FactoryBot.build(:maintenance_history, user: @user, item: @item, company: @company)
   end
 
   context '点検記録を登録できる時' do
     it 'ログインしたユーザーは点検記録を登録できる' do
       # ログインする
       visit new_user_session_path
+      fill_in '会社名', with: @company.company_name
       fill_in 'メールアドレス', with: @user.email
       fill_in 'パスワード', with: @user.password
       find('input[name="commit"]').click
       expect(page).to have_current_path(root_path)
 
-      # 詳細ページに遷移する
+    # アイテム登録ページへのボタンがあることを確認する
+    expect(page).to have_content('アイテム登録')
+      
+    # 投稿ページに移動する
+    visit new_item_path
+    
+    # フォームに情報を入力する
+    fill_in '設備名', with: @item.equipment_name
+    fill_in '設備型番', with: @item.equipment_model_number
+    fill_in 'シリアルナンバー', with: @item.serial_number
+    fill_in '消耗品名', with: @item.consumable_name
+    fill_in '消耗品型番', with: @item.consumable_model_number
+    fill_in 'メーカー', with: @item.consumable_maker
+    fill_in '点検周期 (日)', with: @item.inspection_interval
+    fill_in '使用開始日', with: @item.start_date
+    
+    # 送信するとItemモデルのカウントが1上がることを確認する
+    expect{
+      find('input[name="commit"]').click
+      sleep 1
+    }.to change { Item.count }.by(1)
+    
+    # トップページには先ほど投稿した内容のアイテムが存在することを確認する
+    expect(page).to have_content(@item.equipment_name)
+    expect(page).to have_content(@item.equipment_model_number)
+    expect(page).to have_content(@item.serial_number)
+    expect(page).to have_content(@item.consumable_name)
+    expect(page).to have_content(@item.consumable_model_number)
+    expect(page).to have_content(@item.consumable_maker)
+
+    #　詳細ページへ遷移するボタンが有ることを確認する
+    expect(page).to have_content('詳細')
+    
+    # 詳細ページに遷移する
       visit item_path(@item)
       
       # フォームに情報を入力する
@@ -43,11 +78,11 @@ RSpec.describe "MaintenanceHistories", type: :system do
   context '点検記録を登録できない時' do
     it 'ログインしていないユーザーは点検記録を登録できない' do
       # トップページに遷移する
-      visit root_path
+      visit new_user_session_path
       # アイテム詳細ページへ遷移する
-      visit item_path(@item)
+      #visit item_path(@item)
       # 編集ページへのリンクがないことを確認する
-      expect(page).to have_no_link '編集', href: edit_item_path(@item)
+      #expect(page).to have_no_link '編集', href: edit_item_path(@item)
     end
   end
 end

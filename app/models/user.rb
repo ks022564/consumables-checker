@@ -4,7 +4,7 @@ class User < ApplicationRecord
   PASSWORD_REGEX = /\A(?=.*?[a-z])(?=.*?\d)[a-z\d]+\z/i
 
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :authentication_keys => [:email, :company_name]
+         :recoverable, :rememberable, authentication_keys: [:email, :company_name]
 
   belongs_to :company, optional: true
   has_many :maintenance_histories
@@ -13,12 +13,13 @@ class User < ApplicationRecord
   before_validation :assign_company
 
   validates :name, presence: true
-  validates :email, presence: true
+  validates :email, presence: true, format: { with: URI::MailTo::EMAIL_REGEXP }
   validates :company_name, presence: true
-  validates :password, presence: true, format: { with: PASSWORD_REGEX, message: 'must include both letters and numbers' }
-
-  validate :unique_email_within_company
+  validates :password, presence: true, length: { minimum: 6 }
+  validates :password_confirmation, presence: true, if: -> { password.present? }
   validate :password_complexity
+  validate :password_confirmation_matches, if: -> { password.present? }
+  validate :unique_email_within_company
 
   private
 
@@ -31,12 +32,17 @@ class User < ApplicationRecord
       errors.add(:email, "is already taken within this company")
     end
   end
-
+    #単体テストコード################################################
   def password_complexity
     return if password.blank? || password =~ PASSWORD_REGEX
     errors.add :password, 'must include both letters and numbers'
   end
 
+  def password_confirmation_matches
+    return if password == password_confirmation
+    errors.add :password_confirmation, "doesn't match Password"
+  end
+  ###################################################################
   def self.find_for_authentication(warden_conditions)
     conditions = warden_conditions.dup
     company_name = conditions.delete(:company_name)

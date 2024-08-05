@@ -8,5 +8,8 @@ FactoryBot.define do
     serial_number           { Faker::Device.serial }
     inspection_interval     { Faker::Number.between(from: 1, to: 365) }
     start_date              { Faker::Date.backward(days: 365) }
+    association :company
+    association :user
+    
   end
 end

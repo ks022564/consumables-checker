@@ -6,5 +6,6 @@ FactoryBot.define do
     maintenance_comment    { Faker::Lorem.sentence }
     association :user
     association :item
+    association :company
   end
 end

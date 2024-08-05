@@ -3,6 +3,8 @@ require 'rails_helper'
 RSpec.describe Item, type: :model do
   before do
     @item = FactoryBot.build(:item)
+    @user = FactoryBot.build(:user)
+    @conpany = FactoryBot.build(:company)
   end
 
   describe 'アイテム新規登録' do

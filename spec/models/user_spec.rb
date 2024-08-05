@@ -1,9 +1,11 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
+
   # pending "add some examples to (or delete) #{__FILE__}"
   before do
-    @user = FactoryBot.build(:user)
+    @company = FactoryBot.create(:company)
+    @user = FactoryBot.build(:user, company: @company)
   end
 
   describe 'ユーザー新規登録' do
@@ -13,6 +15,11 @@ RSpec.describe User, type: :model do
       end
     end
     context '新規登録できない時' do
+      it '会社名が必要であること' do
+        @company.company_name = ' '
+        @company.valid?
+        expect(@company.errors.full_messages).to include("Company name can't be blank")
+      end
       it '名前が必要であること' do
         @user.name = ' '
         @user.valid?
@@ -38,18 +45,28 @@ RSpec.describe User, type: :model do
         @user.valid?
         expect(@user.errors.full_messages).to include('Password is too short (minimum is 6 characters)')
       end
-      it '同じメールアドレスは登録できないこと' do
-        @user.save
-        another_user = FactoryBot.build(:user)
-        another_user.email = @user.email
-        another_user.valid?
-        expect(another_user.errors.full_messages).to include('Email has already been taken')
-      end
       it 'パスワードとパスワード（確認）は、値の一致が必須であること' do
         @user.password = '123456'
         @user.password_confirmation = '1234567'
         @user.valid?
         expect(@user.errors.full_messages).to include("Password confirmation doesn't match Password")
+      end
+    end
+    context '同じ会社内で同じメールアドレスが存在する場合' do
+      it 'ユーザーは無効であること' do
+        FactoryBot.create(:user, email: 'test@example.com', company: @company)
+        duplicate_user = FactoryBot.build(:user, email: 'test@example.com', company: @company)
+        expect(duplicate_user).not_to be_valid
+        expect(duplicate_user.errors[:email]).to include('is already taken within this company')
+      end
+    end
+
+    context '異なる会社で同じメールアドレスが存在する場合' do
+      it 'ユーザーは有効であること' do
+        another_company = FactoryBot.create(:company, company_name: 'Another Company')
+        FactoryBot.create(:user, email: 'test@example.com', company: another_company)
+        new_user = FactoryBot.build(:user, email: 'test@example.com', company: @company)
+        expect(new_user).to be_valid
       end
     end
   end  
