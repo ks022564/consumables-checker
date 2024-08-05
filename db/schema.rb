@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_08_05_133608) do
+ActiveRecord::Schema[7.0].define(version: 2024_08_05_140116) do
   create_table "companies", charset: "utf8mb4", force: :cascade do |t|
     t.string "company_name", null: false
     t.datetime "created_at", null: false
@@ -30,6 +30,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_08_05_133608) do
     t.datetime "updated_at", null: false
     t.integer "company_id"
     t.bigint "user_id", default: 6, null: false
+    t.index ["user_id"], name: "index_items_on_user_id"
   end
 
   create_table "maintenance_histories", charset: "utf8mb4", force: :cascade do |t|
@@ -61,6 +62,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_08_05_133608) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "items", "users", name: "fk_items_users"
   add_foreign_key "maintenance_histories", "items"
   add_foreign_key "maintenance_histories", "users"
 end
