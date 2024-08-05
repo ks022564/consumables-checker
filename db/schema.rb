@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_08_05_132306) do
+ActiveRecord::Schema[7.0].define(version: 2024_08_05_133608) do
   create_table "companies", charset: "utf8mb4", force: :cascade do |t|
     t.string "company_name", null: false
     t.datetime "created_at", null: false
@@ -29,7 +29,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_08_05_132306) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "company_id"
-    t.bigint "user_id", null: false
+    t.bigint "user_id", default: 6, null: false
   end
 
   create_table "maintenance_histories", charset: "utf8mb4", force: :cascade do |t|
