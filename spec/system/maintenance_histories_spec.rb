@@ -4,7 +4,7 @@ RSpec.describe "MaintenanceHistories", type: :system do
   before do
     @company = FactoryBot.create(:company)
     @user = FactoryBot.create(:user, company: @company)
-    @item = FactoryBot.create(:item, company: @company)
+    @item = FactoryBot.create(:item, company: @company, user: @user)
     @maintenance_history = FactoryBot.build(:maintenance_history, user: @user, item: @item, company: @company)
   end
 
