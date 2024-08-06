@@ -33,6 +33,22 @@ ActiveRecord::Schema[7.0].define(version: 2024_08_05_140116) do
     t.index ["user_id"], name: "index_items_on_user_id"
   end
 
+  create_table "items_backup", id: false, charset: "utf8mb4", force: :cascade do |t|
+    t.bigint "id", default: 0, null: false
+    t.string "consumable_name", null: false
+    t.string "consumable_model_number", null: false
+    t.string "consumable_maker", null: false
+    t.string "equipment_name", null: false
+    t.string "equipment_model_number", null: false
+    t.string "serial_number", null: false
+    t.integer "inspection_interval", null: false
+    t.date "start_date", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "company_id"
+    t.bigint "user_id", default: 6, null: false
+  end
+
   create_table "maintenance_histories", charset: "utf8mb4", force: :cascade do |t|
     t.date "exchange_date", null: false
     t.date "next_maintenance_day", null: false

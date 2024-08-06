@@ -1,4 +1,4 @@
-class RemoveIndexFromItems < ActiveRecord::Migration[6.0]
+class RemoveIndexFromItems < ActiveRecord::Migration[7.0]
   def change
     # すでに外部キー制約が存在しない場合にのみ削除する
     remove_foreign_key :items, :users if foreign_key_exists?(:items, :users)
