@@ -1,0 +1,17 @@
+<p><%= @user.name %> 様,</p>
+<p>以下の消耗品の交換期限が近づいています:</p>
+<ul>
+  <li>消耗品名: <%= @item.consumable_name %></li>
+  <li>消耗品型番: <%= @item.consumable_model_number %></li>
+  <li>メーカー: <%= @item.consumable_maker %></li>
+  <li>装置名: <%= @item.equipment_name %></li>
+  <li>装置型番: <%= @item.equipment_model_number %></li>
+  <li>シリアルナンバー: <%= @item.serial_number %></li>
+  <% if @maintenance_history.present? %>
+    <li>交換期限: <%= @maintenance_history.next_maintenance_day %></li>
+  <% else %>
+    <% expiration_date = @item.start_date + @item.inspection_interval.days %>
+    <li>交換期限: <%= expiration_date.to_s %></li>
+  <% end %>
+</ul>
+<p>早めの交換をお願いいたします。</p>
