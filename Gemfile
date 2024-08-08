@@ -68,6 +68,7 @@ group :development do
 
   # Gem for previewing emails in the browser
   gem 'letter_opener'
+  gem 'rubocop', require: false
 end
 
 group :test do

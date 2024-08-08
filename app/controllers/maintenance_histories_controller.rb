@@ -16,10 +16,10 @@ class MaintenanceHistoriesController < ApplicationController
     @maintenance_history.user = current_user
     @maintenance_history.company = @company
     if @maintenance_history.save
-        redirect_to @item
+      redirect_to @item
     else
       Rails.logger.error @maintenance_history.errors.full_messages
-        redirect_to @item
+      redirect_to @item
     end
   end
 
@@ -30,6 +30,8 @@ class MaintenanceHistoriesController < ApplicationController
   end
 
   def maintenance_history_params
-    params.require(:maintenance_history).permit(:exchange_date, :next_maintenance_day, :worker, :maintenance_comment).merge(user_id: current_user.id, item_id: params[:item_id])
+    params.require(:maintenance_history).permit(:exchange_date, :next_maintenance_day, :worker, :maintenance_comment).merge(
+      user_id: current_user.id, item_id: params[:item_id]
+    )
   end
 end

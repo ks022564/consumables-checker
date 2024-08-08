@@ -1,5 +1,5 @@
 class MaintenanceHistory < ApplicationRecord
-  scope :by_company, ->(company_id) { where(company_id: company_id) }
+  scope :by_company, ->(company_id) { where(company_id:) }
   belongs_to :item
   scope :latest, -> { order(created_at: :desc).first }
   belongs_to :user

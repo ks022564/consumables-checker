@@ -1,7 +1,7 @@
 class ItemsController < ApplicationController
   before_action :authenticate_user!, only: [:index, :new, :create, :edit, :update, :destroy]
   before_action :set_company
-  
+
   before_action :set_item, only: [:edit, :show, :destroy, :update]
 
   def index
@@ -11,11 +11,13 @@ class ItemsController < ApplicationController
     @items_with_maintenance_dates = @items.map do |item|
       latest_history = item.maintenance_histories.order(created_at: :desc).first
       previous_inspection_date = latest_history ? latest_history.exchange_date : item.start_date
-      next_maintenance_day = latest_history&.next_maintenance_day || (previous_inspection_date + item.inspection_interval.days if previous_inspection_date && item.inspection_interval)
+      next_maintenance_day = latest_history&.next_maintenance_day || (if previous_inspection_date && item.inspection_interval
+                                                                        previous_inspection_date + item.inspection_interval.days
+                                                                      end)
 
       {
-        item: item,
-        next_maintenance_day: next_maintenance_day
+        item:,
+        next_maintenance_day:
       }
     end
 
@@ -33,17 +35,21 @@ class ItemsController < ApplicationController
       when 'consumable_name_desc'
         @items_with_maintenance_dates.sort_by! { |item_with_dates| item_with_dates[:item].consumable_name }.reverse!
       when 'next_inspection_date_asc'
-        @items_with_maintenance_dates.sort_by! { |item_with_dates| item_with_dates[:next_maintenance_day] || Date.new(3000, 1, 1) }
+        @items_with_maintenance_dates.sort_by! do |item_with_dates|
+          item_with_dates[:next_maintenance_day] || Date.new(3000, 1, 1)
+        end
       when 'next_inspection_date_desc'
-        @items_with_maintenance_dates.sort_by! { |item_with_dates| item_with_dates[:next_maintenance_day] || Date.new(3000, 1, 1) }.reverse!
-        when 'created_at_asc'
+        @items_with_maintenance_dates.sort_by! do |item_with_dates|
+          item_with_dates[:next_maintenance_day] || Date.new(3000, 1, 1)
+        end.reverse!
+      when 'created_at_asc'
         @items_with_maintenance_dates.sort_by! { |item_with_dates| item_with_dates[:item].created_at }
       when 'created_at_desc'
         @items_with_maintenance_dates.sort_by! { |item_with_dates| item_with_dates[:item].created_at }.reverse!
       end
     end
 
-    #「点検が近い消耗品のお知らせ」にだけ日数設定を適用
+    # 「点検が近い消耗品のお知らせ」にだけ日数設定を適用
     @near_inspection_items = @items_with_maintenance_dates.dup
     if params[:days].present?
       days = params[:days].to_i
@@ -56,7 +62,6 @@ class ItemsController < ApplicationController
       end
     end
   end
-
 
   def new
     @item = Item.new
@@ -77,18 +82,18 @@ class ItemsController < ApplicationController
 
     latest_history = @item.maintenance_histories.order(created_at: :desc).first
 
-    if latest_history
-      @previous_inspection_date = latest_history.exchange_date
-    else
-      @previous_inspection_date = @item.start_date
-    end
+    @previous_inspection_date = if latest_history
+                                  latest_history.exchange_date
+                                else
+                                  @item.start_date
+                                end
 
     history = @item.maintenance_histories.order(created_at: :desc).first
-      if history
-        @next_maintenance_day = history.next_maintenance_day
-      else
-        @next_maintenance_day = @item.start_date + @item.inspection_interval.days
-      end
+    @next_maintenance_day = if history
+                              history.next_maintenance_day
+                            else
+                              @item.start_date + @item.inspection_interval.days
+                            end
     @maintenance_comment = latest_history&.maintenance_comment
   end
 
@@ -113,14 +118,13 @@ class ItemsController < ApplicationController
   def set_company
     @company = current_user.company
   end
-  
+
   def item_params
     params.require(:item).permit(:consumable_name, :consumable_model_number, :consumable_maker, :equipment_name, :equipment_model_number,
-                                  :serial_number, :inspection_interval, :start_date)
+                                 :serial_number, :inspection_interval, :start_date)
   end
 
   def set_item
     @item = @company.items.find(params[:id])
-    
   end
 end

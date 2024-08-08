@@ -24,29 +24,34 @@ class User < ApplicationRecord
   private
 
   def assign_company
-    self.company = Company.find_or_create_by(company_name: company_name) if company_name.present?
+    self.company = Company.find_or_create_by(company_name:) if company_name.present?
   end
 
   def unique_email_within_company
-    if company.present? && User.where(email: email, company_id: company.id).exists?
-      errors.add(:email, "is already taken within this company")
-    end
+    return unless company.present? && User.where(email:, company_id: company.id).exists?
+
+    errors.add(:email, 'is already taken within this company')
   end
-    #単体テストコード################################################
+
+  # 単体テストコード################################################
   def password_complexity
     return if password.blank? || password =~ PASSWORD_REGEX
+
     errors.add :password, 'must include both letters and numbers'
   end
 
   def password_confirmation_matches
     return if password == password_confirmation
+
     errors.add :password_confirmation, "doesn't match Password"
   end
+
   ###################################################################
   def self.find_for_authentication(warden_conditions)
     conditions = warden_conditions.dup
     company_name = conditions.delete(:company_name)
     email = conditions.delete(:email)
-    joins(:company).where(companies: { company_name: company_name }).where(["lower(email) = :value", { value: email.downcase }]).first
+    joins(:company).where(companies: { company_name: }).where(['lower(email) = :value',
+                                                               { value: email.downcase }]).first
   end
 end

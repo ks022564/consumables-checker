@@ -10,6 +10,5 @@ FactoryBot.define do
     start_date              { Faker::Date.backward(days: 365) }
     association :company
     association :user
-    
   end
 end

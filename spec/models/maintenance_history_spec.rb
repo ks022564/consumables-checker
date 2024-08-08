@@ -15,12 +15,12 @@ RSpec.describe MaintenanceHistory, type: :model do
 
     context '登録できない時' do
       it '点検作業日が必要であること' do
-        @maintenance_history.exchange_date = " "
+        @maintenance_history.exchange_date = ' '
         @maintenance_history.valid?
         expect(@maintenance_history.errors.full_messages).to include("Exchange date can't be blank")
       end
       it '次回点検作業日が必要であること' do
-        @maintenance_history.next_maintenance_day = " "
+        @maintenance_history.next_maintenance_day = ' '
         @maintenance_history.valid?
         expect(@maintenance_history.errors.full_messages).to include("Next maintenance day can't be blank")
       end
@@ -30,7 +30,7 @@ RSpec.describe MaintenanceHistory, type: :model do
         expect(@maintenance_history.errors.full_messages).to include("Worker can't be blank")
       end
       it 'コメントが必要であること' do
-        @maintenance_history.maintenance_comment = " "
+        @maintenance_history.maintenance_comment = ' '
         @maintenance_history.valid?
         expect(@maintenance_history.errors.full_messages).to include("Maintenance comment can't be blank")
       end

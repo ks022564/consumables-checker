@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe "Items", type: :system do
+RSpec.describe 'Items', type: :system do
   before do
     @company = FactoryBot.create(:company)
     @user = FactoryBot.create(:user)
@@ -11,18 +11,18 @@ RSpec.describe "Items", type: :system do
     it 'ログインしたユーザーはアイテム登録できる' do
       # ログインする
       visit new_user_session_path
-      fill_in '会社名', with: @company.company_name 
+      fill_in '会社名', with: @company.company_name
       fill_in 'メールアドレス', with: @user.email
       fill_in 'パスワード', with: @user.password
       find('input[name="commit"]').click
       expect(page).to have_current_path(root_path)
-      
+
       # アイテム登録ページへのボタンがあることを確認する
       expect(page).to have_content('アイテム登録')
-      
+
       # 投稿ページに移動する
       visit new_item_path
-      
+
       # フォームに情報を入力する
       fill_in '設備名', with: @item.equipment_name
       fill_in '設備型番', with: @item.equipment_model_number
@@ -32,13 +32,13 @@ RSpec.describe "Items", type: :system do
       fill_in 'メーカー', with: @item.consumable_maker
       fill_in '点検周期 (日)', with: @item.inspection_interval
       fill_in '使用開始日', with: @item.start_date
-      
+
       # 送信するとItemモデルのカウントが1上がることを確認する
-      expect{
+      expect  do
         find('input[name="commit"]').click
         sleep 1
-      }.to change { Item.count }.by(1)
-      
+      end.to change { Item.count }.by(1)
+
       # トップページには先ほど投稿した内容のアイテムが存在することを確認する
       expect(page).to have_content(@item.equipment_name)
       expect(page).to have_content(@item.equipment_model_number)
@@ -46,14 +46,14 @@ RSpec.describe "Items", type: :system do
       expect(page).to have_content(@item.consumable_name)
       expect(page).to have_content(@item.consumable_model_number)
       expect(page).to have_content(@item.consumable_maker)
-    end  
+    end
   end
 
   context 'アイテム登録できない時' do
     it 'ログインしていないユーザーはアイテム登録できない' do
       # トップページに遷移する
       visit root_path
-      
+
       # 新規投稿ページへのボタンがないことを確認する
       expect(page).to have_no_content('アイテム登録')
     end
@@ -71,21 +71,21 @@ RSpec.describe 'アイテム編集', type: :system do
     it 'ログインしたユーザーはアイテム編集ができる' do
       # ユーザーでログインする
       visit new_user_session_path
-      fill_in '会社名', with: @company.company_name 
+      fill_in '会社名', with: @company.company_name
       fill_in 'メールアドレス', with: @user.email
       fill_in 'パスワード', with: @user.password
       find('input[name="commit"]').click
       expect(page).to have_current_path(root_path)
-      
+
       # アイテム詳細ページへ遷移する
       visit item_path(@item)
-      
+
       # 編集ページへのリンクが有ることを確認する
       expect(page).to have_link '編集', href: edit_item_path(@item)
-      
+
       # 編集画面に遷移する
       visit edit_item_path(@item)
-      
+
       # すでに投稿済みの内容がフォームに入っていることを確認する
       expect(page).to have_field('設備名', with: @item.equipment_name)
       expect(page).to have_field('設備型番', with: @item.equipment_model_number)
@@ -94,16 +94,16 @@ RSpec.describe 'アイテム編集', type: :system do
       expect(page).to have_field('消耗品型番', with: @item.consumable_model_number)
       expect(page).to have_field('メーカー', with: @item.consumable_maker)
       expect(page).to have_field('点検周期 (日)', with: @item.inspection_interval)
-      
+
       # 編集してもItemモデルのカウントは変わらないことを確認する
-      expect{
+      expect do
         find('input[name="commit"]').click
         sleep 1
-      }.to change { Item.count }.by(0)
-      
+      end.to change { Item.count }.by(0)
+
       # トップページにリダイレクトされることを確認する
       expect(current_path).to eq root_path
-      
+
       # トップページには先ほど変更した内容のアイテムが存在することを確認する
       expect(page).to have_content(@item.equipment_name)
       expect(page).to have_content(@item.equipment_model_number)
@@ -119,9 +119,9 @@ RSpec.describe 'アイテム編集', type: :system do
       # ログイン画面に遷移する
       visit new_user_session_path
       # アイテム詳細ページへ遷移する
-      #visit item_path(@item)
+      # visit item_path(@item)
       # 編集ページへのリンクがないことを確認する
-      #expect(page).to have_no_link '編集', href: edit_item_path(@item)
+      # expect(page).to have_no_link '編集', href: edit_item_path(@item)
     end
   end
 end
@@ -136,7 +136,7 @@ RSpec.describe 'アイテム削除', type: :system do
     it 'ログインしたユーザーはアイテムの削除ができる' do
       # ユーザーでログインする
       visit new_user_session_path
-      fill_in '会社名', with: @company.company_name 
+      fill_in '会社名', with: @company.company_name
       fill_in 'メールアドレス', with: @user.email
       fill_in 'パスワード', with: @user.password
       find('input[name="commit"]').click
@@ -144,14 +144,14 @@ RSpec.describe 'アイテム削除', type: :system do
       visit item_path(@item)
       # アイテムに「削除」へのリンクがあることを確認する
       expect(page).to have_link '削除', href: item_path(@item)
-      
+
       # 「削除」をクリックするとアイテムが削除される
       find_link('削除', href: item_path(@item)).click
       # 投稿を削除するとレコードの数が1減ることを確認する
-      expect{
+      expect  do
         sleep 1
-      }.to change { Item.count }.by(-1)
-      
+      end.to change { Item.count }.by(-1)
+
       # トップページにリダイレクトされることを確認する
       expect(current_path).to eq root_path
       # トップページにはアイテムの内容が存在しないことを確認する
@@ -168,9 +168,9 @@ RSpec.describe 'アイテム削除', type: :system do
       # トップページに遷移する
       visit new_user_session_path
       # アイテム詳細ページへ遷移する
-      #visit item_path(@item)
+      # visit item_path(@item)
       # 編集ページへのリンクがないことを確認する
-      #expect(page).to have_no_link '削除', href: item_path(@item)
+      # expect(page).to have_no_link '削除', href: item_path(@item)
     end
   end
 end

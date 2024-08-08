@@ -16,19 +16,19 @@ RSpec.describe Item, type: :model do
 
     context '新規登録できない時' do
       it '消耗品名が必要であること' do
-        @item.consumable_name = " "
+        @item.consumable_name = ' '
         @item.valid?
         expect(@item.errors.full_messages).to include("Consumable name can't be blank")
       end
 
       it '消耗品モデル番号が必要であること' do
-        @item.consumable_model_number = " "
+        @item.consumable_model_number = ' '
         @item.valid?
         expect(@item.errors.full_messages).to include("Consumable model number can't be blank")
       end
 
       it '消耗品のメーカー名が必要であること' do
-        @item.consumable_maker = " "
+        @item.consumable_maker = ' '
         @item.valid?
         expect(@item.errors.full_messages).to include("Consumable maker can't be blank")
       end

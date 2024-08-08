@@ -1,12 +1,12 @@
 require 'rails_helper'
 
-RSpec.describe "Users", type: :system do
+RSpec.describe 'Users', type: :system do
   before do
     @company = FactoryBot.create(:company)
     @user = FactoryBot.build(:user)
   end
-    context 'ユーザー新規登録ができるとき' do 
-      it '正しい情報を入力すればユーザー新規登録ができてトップページに移動する' do
+  context 'ユーザー新規登録ができるとき' do
+    it '正しい情報を入力すればユーザー新規登録ができてトップページに移動する' do
       # ログイン画面に移動する
       visit new_user_session_path
       # ログイン画面にサインアップページへ遷移するボタンがあることを確認する
@@ -20,24 +20,24 @@ RSpec.describe "Users", type: :system do
       fill_in 'パスワード', with: @user.password
       fill_in 'パスワード確認用', with: @user.password_confirmation
       # サインアップボタンを押すとユーザーモデルのカウントが1上がることを確認する
-      expect{
+      expect  do
         find('input[name="commit"]').click
         sleep 1
-      }.to change { User.count }.by(1)
+      end.to change { User.count }.by(1)
       # トップページへ遷移することを確認する
       expect(page).to have_current_path(root_path)
       # トップページにログアウトボタンが表示されることを確認する
       expect(page).to have_content('ログアウト')
-        
+
       # サインアップページへ遷移するボタンや、ログインページへ遷移するボタンが表示されていないことを確認する
       expect(page).to have_no_content('新規登録')
       expect(page).to have_no_content('ログイン')
     end
   end
-    context 'ユーザー新規登録ができないとき' do
-      it '誤った情報ではユーザー新規登録ができずに新規登録ページへ戻ってくる' do
-        # ログイン画面に移動する
-        visit new_user_session_path
+  context 'ユーザー新規登録ができないとき' do
+    it '誤った情報ではユーザー新規登録ができずに新規登録ページへ戻ってくる' do
+      # ログイン画面に移動する
+      visit new_user_session_path
       # トップページにサインアップページへ遷移するボタンがあることを確認する
       expect(page).to have_content('新規登録はこちら')
       # 新規登録ページへ移動する
@@ -49,10 +49,10 @@ RSpec.describe "Users", type: :system do
       fill_in 'パスワード', with: ''
       fill_in 'パスワード確認用', with: ''
       # サインアップボタンを押してもユーザーモデルのカウントは上がらないことを確認する
-      expect{
+      expect  do
         find('input[name="commit"]').click
         sleep 1
-      }.to change { User.count }.by(0)
+      end.to change { User.count }.by(0)
       # 新規登録ページへ戻されることを確認する
       expect(page).to have_current_path(new_user_registration_path)
     end
@@ -96,4 +96,3 @@ RSpec.describe 'ログイン', type: :system do
     end
   end
 end
-
