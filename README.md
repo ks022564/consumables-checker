@@ -6,6 +6,10 @@ consumables-checker
 
 工場設備の消耗品管理を効率化し、設備起因のトラブルを減らすことを目的とした管理アプリケーション
 
+# アプリケーションを制作した背景
+
+前職で働いていた際に、装置起因のトラブルが発生していました。原因を調査すると、装置内の消耗品の劣化や破損が大きな影響を与えていることが分かりました。工場内では多くの装置が使用されており、消耗品の管理が十分にできていない状況でした。そこで、各装置ごとの消耗品を登録し、点検期限が近づいた際にアプリ内で通知し、点検を促すアプリを開発しました。
+
 # URL
 
 https://consumables-checker.onrender.com
@@ -36,9 +40,6 @@ B株式会社
 2. 詳細ページ下部の項目を入力し、「登録」ボタンを押す
 [![Image from Gyazo](https://i.gyazo.com/e7c5ad43f1f0627bce487f360b9e26d8.gif)](https://gyazo.com/e7c5ad43f1f0627bce487f360b9e26d8)
 
-# アプリケーションを制作した背景
-
-前職で働いていた際に、装置起因のトラブルが発生していました。原因を調査すると、装置内の消耗品の劣化や破損が大きな影響を与えていることが分かりました。工場内では多くの装置が使用されており、消耗品の管理が十分にできていない状況でした。そこで、各装置ごとの消耗品を登録し、点検期限が近づいた際にアプリ内で通知し、点検を促すアプリを開発しました。
 
 # 実装予定の機能
 
@@ -46,8 +47,13 @@ B株式会社
 
 # データベース設計
 [![Image from Gyazo](https://i.gyazo.com/996e674c395969cdde3f317dc85fed51.png)](https://gyazo.com/996e674c395969cdde3f317dc85fed51)
+
 # 画面遷移図
 [![Image from Gyazo](https://i.gyazo.com/5370b5a7f2529f2ae18df149fd5250f2.png)](https://gyazo.com/5370b5a7f2529f2ae18df149fd5250f2)
+
+# 要件定義書
+[![Image from Gyazo](https://i.gyazo.com/df260faef119708aa816f20340434f9d.png)](https://gyazo.com/df260faef119708aa816f20340434f9d)
+
 # 開発環境
 
 - フロントエンド
@@ -56,7 +62,7 @@ B株式会社
   - SCSS
 - バックエンド
   - Ruby(v3.2.0)
-  - Ruby On Rails
+  - Ruby on Rails
 
 # ローカルでの動作確認
 
@@ -64,7 +70,8 @@ B株式会社
   - % git clone https://github.com/ks022564/consumables-checker.git
   - % cd consumables-checker
   - % bundle install
-  - % yarn install
+  - % rails db:create
+  - % rails db:migrate
 
 # 工夫した点
 

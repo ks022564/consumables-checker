@@ -54,6 +54,7 @@ group :development, :test do
   gem 'rspec-rails', '~> 4.0.0'
   gem 'factory_bot_rails'
   gem 'faker'
+  gem 'dotenv-rails'
 end
 
 group :development do
@@ -93,3 +94,5 @@ gem 'pry-rails'
 gem 'whenever', require: false
 
 gem 'sidekiq'
+
+gem 'aws-sdk-ses'
