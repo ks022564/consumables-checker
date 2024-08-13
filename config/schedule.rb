@@ -20,5 +20,5 @@
 # Learn more: http://github.com/javan/whenever
 
 every 1.day, at: '1:00 pm' do
-  runner "Item.check_expiration_dates"
+  runner "Item.check_expiration_dates",environment: 'development'
 end

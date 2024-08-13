@@ -1,5 +1,5 @@
-<p><%= @user.name %> 様,</p>
-<p>以下の消耗品の交換期限が近づいています:</p>
+<p><%= @user.name %> 様</p>
+<p>以下の消耗品の点検期限が近づいています:</p>
 <ul>
   <li>消耗品名: <%= @item.consumable_name %></li>
   <li>消耗品型番: <%= @item.consumable_model_number %></li>
@@ -14,4 +14,4 @@
     <li>交換期限: <%= expiration_date.to_s %></li>
   <% end %>
 </ul>
-<p>早めの交換をお願いいたします。</p>
+<p>早めの点検をお願いいたします。</p>
