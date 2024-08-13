@@ -52,7 +52,7 @@ B株式会社
 [![Image from Gyazo](https://i.gyazo.com/5370b5a7f2529f2ae18df149fd5250f2.png)](https://gyazo.com/5370b5a7f2529f2ae18df149fd5250f2)
 
 # 要件定義書
-[![Image from Gyazo](https://i.gyazo.com/df260faef119708aa816f20340434f9d.png)](https://gyazo.com/df260faef119708aa816f20340434f9d)
+[![Image from Gyazo](https://i.gyazo.com/e290cc7acd5a63b92cb21e81ac85cf48.png)](https://gyazo.com/e290cc7acd5a63b92cb21e81ac85cf48)
 
 # 開発環境
 

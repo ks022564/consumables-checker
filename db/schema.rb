@@ -11,13 +11,13 @@
 # It's strongly recommended that you check this file into your version control system.
 
 ActiveRecord::Schema[7.0].define(version: 2024_08_05_140116) do
-  create_table "companies", charset: "utf8mb4", force: :cascade do |t|
+  create_table "companies", charset: "utf8", force: :cascade do |t|
     t.string "company_name", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "items", charset: "utf8mb4", force: :cascade do |t|
+  create_table "items", charset: "utf8", force: :cascade do |t|
     t.string "consumable_name", null: false
     t.string "consumable_model_number", null: false
     t.string "consumable_maker", null: false
@@ -29,27 +29,11 @@ ActiveRecord::Schema[7.0].define(version: 2024_08_05_140116) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "company_id"
-    t.bigint "user_id", default: 6, null: false
+    t.bigint "user_id", default: 1, null: false
     t.index ["user_id"], name: "index_items_on_user_id"
   end
 
-  create_table "items_backup", id: false, charset: "utf8mb4", force: :cascade do |t|
-    t.bigint "id", default: 0, null: false
-    t.string "consumable_name", null: false
-    t.string "consumable_model_number", null: false
-    t.string "consumable_maker", null: false
-    t.string "equipment_name", null: false
-    t.string "equipment_model_number", null: false
-    t.string "serial_number", null: false
-    t.integer "inspection_interval", null: false
-    t.date "start_date", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.integer "company_id"
-    t.bigint "user_id", default: 6, null: false
-  end
-
-  create_table "maintenance_histories", charset: "utf8mb4", force: :cascade do |t|
+  create_table "maintenance_histories", charset: "utf8", force: :cascade do |t|
     t.date "exchange_date", null: false
     t.date "next_maintenance_day", null: false
     t.string "worker", null: false
@@ -63,7 +47,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_08_05_140116) do
     t.index ["user_id"], name: "index_maintenance_histories_on_user_id"
   end
 
-  create_table "users", charset: "utf8mb4", force: :cascade do |t|
+  create_table "users", charset: "utf8", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
     t.string "reset_password_token"
@@ -71,14 +55,13 @@ ActiveRecord::Schema[7.0].define(version: 2024_08_05_140116) do
     t.datetime "remember_created_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "name"
+    t.string "name", null: false
     t.integer "company_id"
     t.string "company_name"
     t.index ["email", "company_id"], name: "index_users_on_email_and_company_id", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
-  add_foreign_key "items", "users", name: "fk_items_users"
   add_foreign_key "maintenance_histories", "items"
   add_foreign_key "maintenance_histories", "users"
 end
